@@ -4,11 +4,15 @@
 \alias{clip_flow}
 \title{Clip flow measurements to zero when no rain has fallen}
 \usage{
-clip_flow(data)
+clip_flow(data, window = 24 * 12)
 }
 \arguments{
 \item{data}{A \code{data.frame} containing columns \code{date_time},
 \code{flow}, and \code{rain}.}
+
+\item{window}{An integer (default is 24*12, i.e. the number of 5-minute
+intervals in 24 hours) indicating the number of observations in the
+window.}
 }
 \value{
 A \code{data.frame} arranged by \code{date_time} with the flow column

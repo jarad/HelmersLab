@@ -9,13 +9,17 @@
 #'
 #' @param data A \code{data.frame} containing columns \code{date_time},
 #'   \code{flow}, and \code{rain}.
+#' @param window An integer (default is 24*12, i.e. the number of 5-minute
+#' intervals in 24 hours) indicating the number of observations in the
+#' window.
 #' @return A \code{data.frame} arranged by \code{date_time} with the flow column
 #'   updated so that flow is 0 when no rain has fallen.
 #' @import dplyr
 #' @importFrom lubridate days
 #' @importFrom zoo rollapply
 #' @export
-clip_flow <- function(data) {
+clip_flow <- function(data,
+                      window = 24 * 12) {  # number of  5-minute intervals in 24 hours
   stopifnot("flow" %in% names(data),
             "date_time" %in% names(data),
             "rain" %in% names(data))
@@ -26,7 +30,7 @@ clip_flow <- function(data) {
     # Calculate rain in last 24 hours
     dplyr::ungroup() %>%
     dplyr::mutate(rain_last24 = zoo::rollapply(rain,
-                                               24 * 12, # number of  5-minute intervals in 24 hours
+                                               window,
                                                max,
                                                partial = TRUE,
                                                align = "right")) %>%
