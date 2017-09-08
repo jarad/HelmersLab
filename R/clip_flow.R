@@ -4,9 +4,10 @@
 #' has been no rainfall recently, but the flume is still recording flow. When
 #' this occurs, we set the flow to zero.
 #'
-#' @param data A \code{data.frame} containing columns date_time, flow, and rain.
-#' @return A \code{data.frame} with the flow column updated so that flow is zero
-#'   when no rain has fallen.
+#' @param data A \code{data.frame} containing columns \code{date_time},
+#'   \code{flow}, and \code{rain}.
+#' @return A \code{data.frame} arranged by \code{date_time} with the flow column
+#'   updated so that flow is 0 when no rain has fallen.
 #' @import dplyr
 #' @importFrom lubridate days
 #' @export
@@ -16,7 +17,10 @@ clip_flow <- function(data) {
             "rain" %in% names(data))
 
   d <- data %>%
-    arrange(date_time)
+    dplyr::arrange(date_time)
+
+  if(sum(duplicated(d$date_time))>0)
+    warning("duplicated times are detected")
 
   # Calculate moving average
   d$rain_24hour_moving_average <- NA
@@ -30,7 +34,9 @@ clip_flow <- function(data) {
     d$rain_24hour_moving_average[i] <- mean(d$rain[ii], na.rm=TRUE)
   }
 
+  # Set flow to zero when last 24 hours had no rain
   d %>%
-    mutate(flow = ifelse(rain_24hour_moving_average == 0,
-                         0, flow))
+    dplyr::mutate(flow = ifelse(rain_24hour_moving_average == 0,
+                         0, flow)) %>%
+    dplyr::select(-rain_24hour_moving_average)
 }
