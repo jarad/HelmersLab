@@ -1,0 +1,16 @@
+Package: HelmersLab
+Title: Contains utility functions for Matt Helmers and his lab
+Version: 0.1
+Authors@R: c(person("Jarad", "Niemi",   email = "niemi@iastate.edu",    role = c("aut", "cre")),
+             person("Matt",  "Helmers", email = "mhelmers@iastate.edu", role = c("cph")),
+             person("Chris", "Witte",   email = "witte@iastate.edu",    role = c("aut","ctr")))
+Description: Contains utility functions and data for Matt Helmers and his lab
+    that is not project specific.
+Depends: R (>= 3.0)
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+Suggests: STRIPSHelmers,
+    STRIPS2Helmers,
+    testthat
+RoxygenNote: 6.0.1
