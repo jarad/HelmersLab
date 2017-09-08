@@ -3,3 +3,4 @@
 export(clip_flow)
 import(dplyr)
 importFrom(lubridate,days)
+importFrom(zoo,rollapply)

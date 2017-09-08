@@ -17,5 +17,8 @@ A \code{data.frame} arranged by \code{date_time} with the flow column
 \description{
 The flumes that measure flow sometimes get stuck. This is clear when there
 has been no rainfall recently, but the flume is still recording flow. When
-this occurs, we set the flow to zero.
+this occurs, we set the flow to zero. This function sorts the
+\code{data.frame} by date_time and then calculates the rain in the previous
+24*12 rows of the data.frame as this assumes the data are in 5 minute
+increments.
 }
