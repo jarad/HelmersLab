@@ -19,9 +19,6 @@ clip_flow <- function(data) {
   d <- data %>%
     dplyr::arrange(date_time)
 
-  if(sum(duplicated(d$date_time))>0)
-    warning("duplicated times are detected")
-
   # Calculate moving average
   d$rain_24hour_moving_average <- NA
   for (i in 1:nrow(d)) {
