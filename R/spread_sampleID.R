@@ -9,12 +9,20 @@
 #' @import dplyr
 #' @importFrom zoo na.locf
 #' @export
+#' @examples
+#' d <- data.frame(flow = c(0,1,NA,1,0),
+#'                 sampleID = c(NA,NA,1,NA,NA))
+#' spread_sampleID(d)
+#'
+#' d <- data.frame(flow = c(0,1,NA,1,NA,1,0),
+#'                 sampleID = c(NA,NA,1,NA,2,NA,NA))
+#' spread_sampleID(d)
 #'
 spread_sampleID <- function(data) {
   stopifnot("flow"     %in% names(data),
             "sampleID" %in% names(data))
 
-  tmp_value <- 9999999
+  tmp_value <- "9999999"
 
   data %>%
     mutate(
