@@ -6,16 +6,27 @@ test_that("gives errors when missing columns", {
   expect_error(spread_sampleID(d[,-2]))
 })
 
-test_that("gives proper results", {
+test_that("gives proper result for no samples", {
+  d <- data.frame(flow = c(0,1,1,1,1,1,0),
+                  sampleID = rep(NA,7))
+  
+  expect_equal(spread_sampleID(d), d)
+})
+
+test_that("gives proper result for one sample", {
   d <- data.frame(flow = c(0,1,NA,1,0),
                   sampleID = c(NA,NA,"1",NA,NA))
 
-  expect_equal(spread_sampleID(d), d %>% dplyr::mutate(sampleID = c(NA,"1","1","1",NA)))
+  expect_equal(spread_sampleID(d), 
+               d %>% dplyr::mutate(sampleID = c(NA,"1","1","1",NA)))
 })
 
-test_that("gives proper results", {
+test_that("gives proper result for two samples", {
   d <- data.frame(flow = c(0,1,NA,1,NA,1,0),
                   sampleID = c(NA,NA,"1",NA,"2",NA,NA))
 
-  expect_equal(spread_sampleID(d), d %>% dplyr::mutate(sampleID = c(NA,"1","1","2","2","2",NA)))
+  expect_equal(spread_sampleID(d), 
+               d %>% dplyr::mutate(sampleID = c(NA,"1","1","2","2","2",NA)))
 })
+
+
