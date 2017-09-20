@@ -31,7 +31,7 @@ clip_flow <- function(data,
     dplyr::ungroup() %>%
     dplyr::mutate(rain_last24 = zoo::rollapply(rain,
                                                window,
-                                               max,
+                                               function(x) max(x, na.rm = TRUE),
                                                partial = TRUE,
                                                align = "right")) %>%
 
