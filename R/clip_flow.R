@@ -35,11 +35,11 @@ clip_flow <- function(data,
 
     # Calculate rain in last 24 hours
     dplyr::ungroup() %>%
-    dplyr::mutate(rain_last24 = zoo::rollapply(rain,
-                                               window,
-                                               function(x) max(x, na.rm = TRUE),
-                                               partial = TRUE,
-                                               align = "right")) %>%
+    dplyr::mutate(rain_max = zoo::rollapply(rain,
+                                            window,
+                                            function(x) max(x, na.rm = TRUE),
+                                            partial = TRUE,
+                                            align = "right")) %>%
 
     # Set flow to 0 if no rain in last 24 hours
     dplyr::mutate(flow = ifelse(rain_max > 0 | is.na(rain_max), flow, 0)) %>%
