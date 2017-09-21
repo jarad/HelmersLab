@@ -37,7 +37,7 @@ clip_flow <- function(data,
     dplyr::ungroup() %>%
     dplyr::mutate(rain_max = zoo::rollapply(rain,
                                             window,
-                                            function(x) max(x, na.rm = TRUE),
+                                            max_or_na, # see below
                                             partial = TRUE,
                                             align = "right")) %>%
 
@@ -51,4 +51,20 @@ clip_flow <- function(data,
   stopifnot(all(dim(data) == dim(d)))
 
   return(d)
+}
+
+
+
+#' Returns max or NA (rather than -Inf) if there are no non-NA values
+#'
+#' The max function returns -Inf and a warning if there are no non-NA values in
+#' their arguments. This function suppress the warning and returns NA.
+#'
+#' @param x a numeric vector
+#'
+#' @return the result of max or NA if there are no non-NA values
+#'
+max_or_na <- function(x) {
+  if (all(is.na(x))) return(NA)
+  return(max(x, na.rm = TRUE))
 }
