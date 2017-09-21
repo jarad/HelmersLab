@@ -4,15 +4,14 @@
 \alias{clip_flow}
 \title{Clip flow measurements to zero when no rain has fallen}
 \usage{
-clip_flow(data, window = 24 * 12)
+clip_flow(data, window = 24 * 60)
 }
 \arguments{
 \item{data}{A \code{data.frame} containing columns \code{date_time},
 \code{flow}, and \code{rain}.}
 
-\item{window}{An integer (default is 24*12, i.e. the number of 5-minute
-intervals in 24 hours) indicating the number of observations in the
-window.}
+\item{window}{An integer indicating the number of minutes to calculate the
+max rain over. Default is 24*60, the number of minutes in a day.}
 }
 \value{
 A \code{data.frame} arranged by \code{date_time} with the flow column
@@ -22,7 +21,7 @@ A \code{data.frame} arranged by \code{date_time} with the flow column
 The flumes that measure flow sometimes get stuck. This is clear when there
 has been no rainfall recently, but the flume is still recording flow. When
 this occurs, we set the flow to zero. This function sorts the
-\code{data.frame} by date_time and then calculates the rain in the previous
-24*12 rows of the data.frame as this assumes the data are in 5 minute
-increments.
+\code{data.frame} by date_time and then calculates the max rain in the
+previous \code{window} rows of the data.frame (ignoring NAs).
+If this max is zero, then flow is set to zero.
 }
