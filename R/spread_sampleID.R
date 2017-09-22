@@ -27,8 +27,8 @@ spread_sampleID <- function(data) {
   data %>%
     mutate(
       sampleID = ifelse(flow > 0 | is.na(flow), sampleID, tmp_value),
-      sampleID = zoo::na.locf(sampleID, fromLast = TRUE),  # carry backward
+      sampleID = zoo::na.locf(sampleID, fromLast = TRUE, na.rm = FALSE),  # carry backward
       sampleID = ifelse(flow > 0 & sampleID == tmp_value, NA, sampleID),
-      sampleID = zoo::na.locf(sampleID, fromLast = FALSE), # carry forward
+      sampleID = zoo::na.locf(sampleID, fromLast = FALSE, na.rm = FALSE), # carry forward
       sampleID = ifelse(sampleID == tmp_value, NA, sampleID))
 }
