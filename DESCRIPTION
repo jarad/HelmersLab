@@ -1,6 +1,6 @@
 Package: HelmersLab
 Title: Contains utility functions for Matt Helmers and his lab
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: c(person("Jarad", "Niemi",   email = "niemi@iastate.edu",    role = c("aut", "cre")),
              person("Matt",  "Helmers", email = "mhelmers@iastate.edu", role = c("cph")),
              person("Chris", "Witte",   email = "witte@iastate.edu",    role = c("aut","ctr")))
