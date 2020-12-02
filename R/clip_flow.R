@@ -23,15 +23,15 @@ clip_flow <- function(data,
             "date_time" %in% names(data),
             "rain" %in% names(data))
 
+  data$original = TRUE
+  
   # Construct a data.frame with every minute
   d_full <- data.frame(date_time = seq(min(data$date_time),
                                        max(data$date_time),
                                        by = "1 min"))
 
   # Expand data set to include every minute
-  d <- data %>%
-    dplyr::mutate(original = TRUE) %>%
-    dplyr::right_join(d_full, by = "date_time")  %>%
+  d <- dplyr::full_join(d_full, data, by = "date_time")  %>%
 
     # Calculate rain in last 24 hours
     dplyr::ungroup() %>%
